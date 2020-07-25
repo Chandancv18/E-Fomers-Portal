@@ -1,0 +1,70 @@
+<html>
+<style types="text/css">
+    body {
+        background-image: url("../images/former.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+</style>
+<head>
+	<script src="angular/angular.min.js"> </script>
+</head>
+    <script>var myModule = angular.module("myApp", [])</script>
+    <body ng-app="myApp">
+        <form ng-controller='appController' ng-submit="send()">
+            <!--send() function from the controller is called on form submission -->
+
+            <h2><label for="pasid">Former Id: </label><br /></h2>
+            <input type="text" id="pasid" ng-model="data.pasid" /> <br /><hr>
+            <h2><label for="pasname">Former Mobile Number :</label><br /></h2>
+            <input type="text" id="pasname" ng-model="data.pasname" /> <br /><hr>
+            <h2><label for="pasname">Former current Place </label><br /></h2>
+            <input type="text" id="pasg" ng-model="data.pasg" /> <br /><hr>
+            <h2><label for="pasname">Former Habving Agricultural Loan [Yes/No]? :</label><br /></h2>
+            <input type="text" id="pasno" ng-model="data.pasno" /> <br /><hr>
+            <h2><label for="pasname">Crops growing :</label><br /></h2>
+            <input type="text" id="src:" ng-model="data.src" /> <br /> <hr>
+            <h2><label for="pasname"> Manure Using :</label><br /></h2>
+            <input type="text" id="dst:" ng-model="data.dst" /> <br /> <br /><hr>
+<hr>
+
+            <input type="submit" ng-click="Submit">
+
+            <div><pre>{{response.data}}</pre>  </div>
+        </form>
+
+        <a href="index.html">Back</a>
+        <script>
+            myModule.controller("appController",
+                function appController($scope, $http) {
+                    /*$http directive is used to communicate to the server */
+                    $scope.data = {}
+                    $scope.response = {}
+
+                    $scope.send = function () {
+                        /*executed when submit is clicked*/
+                        console.log($scope.data.empname);
+                        var posting = $http({
+                            /*posting to /process_get  */
+                            //method: 'GET',
+                            //url: '/process_get',
+                            //params: $scope.data,
+                            /*posting to /process_post*/
+                            method: 'POST',
+                            url: '/process_post',
+                            data: $scope.data,
+
+                        }).then(function (response) {
+                            /*executed when server responds back*/
+                            console.log(response);
+                            $scope.response.data = response.data;
+                        }, function (error) {
+                            console.log(error);
+                        });
+                    }
+                });
+        </script>
+    </body>
+</html>
+
+ 
